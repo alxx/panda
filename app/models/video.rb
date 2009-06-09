@@ -418,7 +418,7 @@ class Video < SimpleDB::Base
       self.parent_video.send_status_update_to_client
       self.notification = 'success'
       self.save
-      Merb.logger.info "Notification successfull"
+      Merb.logger.info "Notification successful"
     rescue
       # Increment num retries
       if self.notification.to_i >= Panda::Config[:notification_retries]
