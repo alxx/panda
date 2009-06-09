@@ -12,7 +12,7 @@ class Video < SimpleDB::Base
   def self.create_empty(params = {})
     video = Video.create
     video.status = 'empty'
-    video.custom_status_update_url = params[:status_update_url]
+    video.custom_state_update_url = params[:state_update_url]
     video.save
     
     return video
