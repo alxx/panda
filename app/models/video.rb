@@ -3,15 +3,16 @@ class Video < SimpleDB::Base
   include LocalStore
   
   set_domain Panda::Config[:sdb_videos_domain]
-  properties :filename, :original_filename, :parent, :status, :duration, :container, :width, :height, :video_codec, :video_bitrate, :fps, :audio_codec, :audio_bitrate, :audio_sample_rate, :profile, :profile_title, :player, :queued_at, :started_encoding_at, :encoding_time, :encoded_at, :last_notification_at, :notification, :updated_at, :created_at, :thumbnail_position
+  properties :filename, :original_filename, :parent, :status, :duration, :container, :width, :height, :video_codec, :video_bitrate, :fps, :audio_codec, :audio_bitrate, :audio_sample_rate, :profile, :profile_title, :player, :queued_at, :started_encoding_at, :encoding_time, :encoded_at, :last_notification_at, :notification, :updated_at, :created_at, :thumbnail_position, :custom_state_update_url
   
   # TODO: state machine for status
   # An original video can either be 'empty' if it hasn't had the video file uploaded, or 'original' if it has
   # An encoding will have it's original attribute set to the key of the original parent, and a status of 'queued', 'processing', 'success', or 'error'
   
-  def self.create_empty
+  def self.create_empty(params = {})
     video = Video.create
     video.status = 'empty'
+    video.custom_status_update_url = params[:status_update_url]
     video.save
     
     return video
@@ -118,9 +119,10 @@ class Video < SimpleDB::Base
   def upload_redirect_url
     Panda::Config[:upload_redirect_url].gsub(/\$id/,self.key)
   end
-  
+
+  # alxx
   def state_update_url
-    Panda::Config[:state_update_url].gsub(/\$id/,self.key)
+    (self.custom_state_update_url || Panda::Config[:state_update_url]).to_s.gsub(/\$id/,self.key)
   end
   
   def duration_str

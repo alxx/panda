@@ -146,6 +146,8 @@ Videos schema
     profile # id of encoding profile used
     profile_title
 
+	custom_update_status_url # a specific url to callback for this particular video
+
     updated_at
     created_at
 
