@@ -6,7 +6,7 @@
   <li><%= link_to "Change thumbnail", "/videos/#{@video.key}/thumbnail/edit" %></li>
   <% end %>
   <li>
-    <%= form_for(@video, :action => url(:video, :id => @video.key), :method => :post) do #method was :delete, but merb was crashing silently with that %>
+    <%= form_for(@video, :action => url(:video, :id => @video.key), :method => :post) do %>
       <%= submit "Delete video", :onclick => "var agree=confirm('This will delete the original video file and all its encodings');if (agree) {return true} else {return false}" %>
     <% end =%>
    </li>
