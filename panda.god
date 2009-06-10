@@ -20,7 +20,7 @@ God.watch do |w|
   w.restart_if do |restart|
     # Restart if not returning http success
     restart.condition(:http_response_code) do |c|
-      c.interval = 5.seconds
+      c.interval = 60.seconds
       c.host = '127.0.0.1'
       c.port = port
       c.path = '/login'
