@@ -32,6 +32,8 @@ Merb::Router.prepare do |r|
   r.match("/login").to(:controller => "auth", :action => "login")
   r.match("/logout").to(:controller => "auth", :action => "logout")
   
+  r.match('/videos/destroy/:id').to(:controller => 'videos', :action => 'destroy')
+  
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
