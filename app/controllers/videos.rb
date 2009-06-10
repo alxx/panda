@@ -45,6 +45,7 @@ class Videos < Application
   def destroy
     provides :html, :xml, :yaml
     
+    Merb.logger.info "Will obliterate video #{@video.id}..."
     @video.obliterate!
     
     case content_type

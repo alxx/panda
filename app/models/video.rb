@@ -98,11 +98,15 @@ class Video < SimpleDB::Base
   # Delete an original video and all it's encodings.
   def obliterate!
     # TODO: should this raise an exception if the file does not exist?
+
+    Merb.logger.info "\tDeleting clip from store..."
     self.delete_from_store
+    Merb.logger.info "\tDeleting encodings from store, then destroying them..."
     self.encodings.each do |e|
       e.delete_from_store
       e.destroy!
     end
+    Merb.logger.info "\tDestroying myself..."
     self.destroy!
   end
 
