@@ -145,6 +145,7 @@ private
   def set_video
     # Throws Amazon::SDB::RecordNotFoundError if video cannot be found
     @video = Video.find(params[:id])
+    Merb.logger.info "Found video: #{@video.inspect}"
   end
   
   def set_video_with_nice_errors
