@@ -6,12 +6,12 @@ God.watch do |w|
   w.stop = "/bin/bash -c 'cd #{current_path}; merb -k #{port}'"
   w.pid_file = File.join(current_path, "log/merb.#{port}.pid")
   w.behavior(:clean_pid_file)
-  w.start_grace = 10.seconds
-  w.restart_grace = 10.seconds
+  w.start_grace = 100.seconds
+  w.restart_grace = 100.seconds
   
   w.start_if do |start|
     start.condition(:process_running) do |c|
-      c.interval = 10.seconds
+      c.interval = 100.seconds
       c.running = false
       c.notify = 'admin'
     end
@@ -25,7 +25,7 @@ God.watch do |w|
       c.port = port
       c.path = '/login'
       c.code_is_not = 200
-      c.timeout = 10.seconds
+      c.timeout = 100.seconds
       c.times = [2, 3] # 2 out of 3 intervals
     end
   end
