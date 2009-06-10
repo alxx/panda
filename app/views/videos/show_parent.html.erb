@@ -7,7 +7,7 @@
   <% end %>
   <li>
     <!-- %= form_for(@video, :action => url(:video, :id => @video.key), :method => :delete) do % -->
-    <form method='post' action='/videos/delete/<%= @video.key %>'> 
+    <form method='post' action='/videos/destroy/<%= @video.key %>'> 
       <%= submit "Delete video", :onclick => "var agree=confirm('This will delete the original video file and all its encodings');if (agree) {return true} else {return false}" %>
     <!-- % end % -->
 	</form>
