@@ -120,7 +120,7 @@ class Video < SimpleDB::Base
     Panda::Config[:upload_redirect_url].gsub(/\$id/,self.key)
   end
 
-  # alxx
+  # alxx - use the callback url provided when the video was created, or the one in the configs as default.
   def state_update_url
     (self.custom_state_update_url || Panda::Config[:state_update_url]).to_s.gsub(/\$id/,self.key)
   end

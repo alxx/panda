@@ -41,10 +41,20 @@ class Videos < Application
     render :layout => :simple
   end
   
-  # Use: HQ
+  # Use: HQ, API (alxx -- added API part)
   def destroy
+    provides :html, :xml, :yaml
+    
     @video.obliterate!
-    redirect "/videos"
+    
+    case content_type
+    when :html
+      redirect "/videos"
+    when :xml
+      @video.create_response.to_simple_xml
+    when :yaml
+      @video.create_response.to_yaml
+    end
   end
 
   # Use: HQ, API
