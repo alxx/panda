@@ -193,7 +193,7 @@ class Video < SimpleDB::Base
   # Deletes the video file without raising an exception if the file does 
   # not exist.
   def delete_from_store
-    Store.delete(self.filename)
+    Store.delete(self.filename) if self.filename
     self.clippings.each { |c| c.delete_from_store }
     Store.delete(self.clipping.filename(:screenshot, :default => true))
     Store.delete(self.clipping.filename(:thumbnail, :default => true))
