@@ -93,17 +93,21 @@ class Videos < Application
     rescue Amazon::SDB::RecordNotFoundError
       # No empty video object exists
       self.status = 404
+      Merb.logger.info "Rescuing an Amazon::SDB::RecordNotFoundError"
       render_error($!.to_s.gsub(/Amazon::SDB::/,""))
     rescue Video::NotValid
       # Video object is not empty. Likely a video has already been uploaded.
+      Merb.logger.info "Rescuing a Video::NotValid"
       self.status = 404
       render_error($!.to_s.gsub(/Video::/,""))
     rescue Video::VideoError
       # Generic Video error
+      Merb.logger.info "Rescuing a Video::VideoError"
       self.status = 500
       render_error($!.to_s.gsub(/Video::/,""))
     rescue => e
       # Other error
+      Merb.logger.info "Rescuing a generic error"
       self.status = 500
       render_error("InternalServerError", e)
     else
