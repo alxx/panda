@@ -74,7 +74,9 @@ class Videos < Application
       headers.merge!({'Location'=> "/videos/#{@video.key}"})
       @video.create_response.to_simple_xml
     when :yaml
-      Merb.logger.info "Content-type is yaml, redirecting to /videos/#{@video.key} using Location http header, then creating a response using video.create_response"
+      Merb.logger.info "Content-type is yaml, redirecting to /videos/#{@video.key} using Location http header, then creating a response using video.create_response."
+      v=Video.find @video.key
+      Merb.logger.info "At this point, video is #{v.inspect}"
       headers.merge!({'Location'=> "/videos/#{@video.key}"})
       @video.create_response.to_yaml
     end
@@ -159,6 +161,7 @@ private
       @video = Video.find(params[:id])
     rescue Amazon::SDB::RecordNotFoundError
       self.status = 404
+      Merb.logger.info "Rescuing an Amazon::SDB::RecordNotFoundError in set_video_with_nice_errors"
       throw :halt, render_error($!.to_s.gsub(/Amazon::SDB::/,""))
     end
   end
