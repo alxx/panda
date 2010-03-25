@@ -76,7 +76,6 @@ class Videos < Application
     when :yaml
       Merb.logger.info "Content-type is yaml, redirecting to /videos/#{@video.key} using Location http header, then creating a response using video.create_response."
       v=Video.find @video.key
-      Merb.logger.info "At this point, video is #{v.inspect}"
       headers.merge!({'Location'=> "/videos/#{@video.key}"})
       @video.create_response.to_yaml
     end

@@ -15,6 +15,8 @@ class Video < SimpleDB::Base
     video.custom_state_update_url = params[:state_update_url]
     video.save
     
+    sleep 1 # For some reason, SOMETIMES if you create a record and then you IMMEDIATELY try to find it, you won't find it. -- alxx
+    
     return video
   end
   
