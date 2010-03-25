@@ -63,7 +63,7 @@ class Videos < Application
     provides :html, :xml, :yaml
     
     @video = Video.create_empty(params)
-    Merb.logger.info "#{@video.key}: Created video"
+    Merb.logger.info "#{@video.key}: Created video #{@video.inspect} with errors #{@video.errors.to_a.inspect}"
     
     case content_type
     when :html
