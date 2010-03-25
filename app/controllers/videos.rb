@@ -67,11 +67,14 @@ class Videos < Application
     
     case content_type
     when :html
+      Merb.logger.info "Content-type is html, redirecting to form_video with this video key: #{@video.key}"
       redirect url(:form_video, @video.key)
     when :xml
+      Merb.logger.info "Content-type is xml, redirecting to /videos/#{@video.key} using Location http header, then creating a response using video.create_response"
       headers.merge!({'Location'=> "/videos/#{@video.key}"})
       @video.create_response.to_simple_xml
     when :yaml
+      Merb.logger.info "Content-type is yaml, redirecting to /videos/#{@video.key} using Location http header, then creating a response using video.create_response"
       headers.merge!({'Location'=> "/videos/#{@video.key}"})
       @video.create_response.to_yaml
     end
